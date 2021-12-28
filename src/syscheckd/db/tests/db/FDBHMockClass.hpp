@@ -15,11 +15,15 @@ class FIMDBHelpersMock
             return mock;
         }
 
-        MOCK_METHOD(void, initDB, (unsigned int, unsigned int,
-                                   fim_sync_callback_t, logging_callback_t,
-                                   std::shared_ptr<DBSync>, std::shared_ptr<RemoteSync>), ());
-        MOCK_METHOD(void, initDB, (unsigned int, unsigned int, unsigned int, fim_sync_callback_t, logging_callback_t,
-                                   std::shared_ptr<DBSync>, std::shared_ptr<RemoteSync>), ());
+        MOCK_METHOD(void, initDB, (unsigned int,
+                                   fim_sync_callback_t,
+                                   logging_callback_t,
+                                   std::shared_ptr<DBSync>,
+                                   std::shared_ptr<RemoteSync>,
+                                   unsigned int,
+                                   unsigned int,
+                                   bool), ());
+
         MOCK_METHOD(void, removeFromDB, (const std::string&, const nlohmann::json&), ());
         MOCK_METHOD(void, getCount, (const std::string&, int&), ());
         MOCK_METHOD(void, updateItem, (const std::string&, const nlohmann::json&), ());

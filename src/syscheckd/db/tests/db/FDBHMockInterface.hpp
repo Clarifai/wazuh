@@ -7,25 +7,25 @@
 namespace FIMDBHelpersUTInterface
 {
 
-#ifndef WIN32
 
-    void initDB(unsigned int sync_interval, unsigned int file_limit,
-                fim_sync_callback_t sync_callback, logging_callback_t logCallback,
-                std::shared_ptr<DBSync>handler_DBSync, std::shared_ptr<RemoteSync>handler_RSync)
+    void initDB(const unsigned int syncInterval,
+                fim_sync_callback_t syncCallback,
+                logging_callback_t logCallback,
+                std::shared_ptr<DBSync>handlerDBSync,
+                std::shared_ptr<RemoteSync>handlerRSync,
+                const unsigned int fileLimit,
+                const unsigned int registryLimit = 0,
+                const bool isWindows = false)
     {
-        FIMDBHelpersMock::getInstance().initDB(sync_interval, file_limit, sync_callback, logCallback, handler_DBSync, handler_RSync);
+        FIMDBHelpersMock::getInstance().initDB(syncInterval,
+                                               syncCallback,
+                                               logCallback,
+                                               handlerDBSync,
+                                               handlerRSync,
+                                               fileLimit,
+                                               registryLimit,
+                                               isWindows);
     }
-#else
-
-    void initDB(unsigned int sync_interval, unsigned int file_limit, unsigned int registry_limit,
-                fim_sync_callback_t sync_callback, logging_callback_t logCallback,
-                std::shared_ptr<DBSync>handler_DBSync, std::shared_ptr<RemoteSync>handler_RSync)
-    {
-        FIMDBHelpersMock::getInstance().initDB(sync_interval, file_limit, registry_limit, sync_callback, logCallback, handler_DBSync,
-                                               handler_RSync);
-    }
-#endif
-
 
     void removeFromDB(const std::string& tableName, const nlohmann::json& filter)
     {
