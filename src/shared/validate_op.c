@@ -463,6 +463,10 @@ int OS_IsValidIP(const char *ip_address, os_ip *final_ip)
                 /* number of regex captures */
                 int sub_strings_num = regex_match->d_size.prts_str_alloc_size/sizeof(char*);
 
+                if(sub_strings_num == 2) {
+                    ret = 1;
+                }
+
                 /* Regex 0 (i = 0) match IPv4, superior regex match IPv6 */
                 if (i > 0) {
                     /* IPv6 */
