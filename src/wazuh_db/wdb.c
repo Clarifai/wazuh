@@ -1270,6 +1270,28 @@ int wdb_close(wdb_t * wdb, bool commit) {
     }
 }
 
+void wdb_finalize_all_statements(wdb_t * wdb) {
+    for (int i = 0; i < WDB_STMT_SIZE; i++) {
+        if (wdb->stmt[i]) {
+            sqlite3_finalize(wdb->stmt[i]);
+            wdb->stmt[i] = NULL;
+        }
+    }
+
+    struct stmt_cache_list *node_stmt = wdb->cache_list;
+    struct stmt_cache_list *temp = NULL;
+    while (node_stmt){
+        if (node_stmt->value.stmt) {
+            // value.stmt would be free in sqlite3_finalize.
+            sqlite3_finalize(node_stmt->value.stmt);
+        }
+        os_free(node_stmt->value.query);
+        temp = node_stmt->next;
+        os_free(node_stmt);
+        node_stmt = temp;
+    }
+}
+
 void wdb_leave(wdb_t * wdb) {
     if(wdb) {
         wdb->refcount--;
